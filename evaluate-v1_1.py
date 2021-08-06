@@ -7,7 +7,6 @@ import argparse
 import json
 import sys
 
-
 def normalize_answer(s):
     """Lower text and remove punctuation, articles and extra whitespace."""
     def remove_articles(text):
@@ -25,7 +24,6 @@ def normalize_answer(s):
 
     return white_space_fix(remove_articles(remove_punc(lower(s))))
 
-
 def f1_score(prediction, ground_truth):
     prediction_tokens = normalize_answer(prediction).split()
     ground_truth_tokens = normalize_answer(ground_truth).split()
@@ -38,10 +36,8 @@ def f1_score(prediction, ground_truth):
     f1 = (2 * precision * recall) / (precision + recall)
     return f1
 
-
 def exact_match_score(prediction, ground_truth):
     return (normalize_answer(prediction) == normalize_answer(ground_truth))
-
 
 def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
     scores_for_ground_truths = []
@@ -49,7 +45,6 @@ def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
         score = metric_fn(prediction, ground_truth)
         scores_for_ground_truths.append(score)
     return max(scores_for_ground_truths)
-
 
 def evaluate(dataset, predictions):
     f1 = exact_match = total = 0
@@ -74,7 +69,6 @@ def evaluate(dataset, predictions):
 
     return {'exact_match': exact_match, 'f1': f1}
 
-
 if __name__ == '__main__':
     expected_version = '1.1'
     parser = argparse.ArgumentParser(
@@ -92,3 +86,4 @@ if __name__ == '__main__':
     with open(args.prediction_file) as prediction_file:
         predictions = json.load(prediction_file)
     print(json.dumps(evaluate(dataset, predictions)))
+    
